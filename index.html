@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Constelación de Nuestro Amor</title>
+    <title>Constelación de Nuestro Amor - Realista</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         margin: 0;
@@ -12,8 +16,8 @@
       }
 
       body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(to bottom, #0a0a2a, #1a1a40, #0a0a2a);
+        font-family: 'Raleway', sans-serif;
+        background: linear-gradient(to bottom, #050518, #0a0a2a, #050518);
         color: #fff;
         min-height: 100vh;
         overflow-x: hidden;
@@ -21,7 +25,7 @@
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
         padding: 20px;
         text-align: center;
@@ -29,30 +33,48 @@
 
       header {
         padding: 40px 0 20px;
+        position: relative;
+        z-index: 10;
       }
 
       h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        color: #faed33;
-        text-shadow: 0 0 10px rgba(235, 10, 10, 0.8);
+        font-family: 'Cinzel', serif;
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #f4e9c9;
+        text-shadow: 0 0 15px rgba(255, 223, 163, 0.7);
+        letter-spacing: 2px;
+        animation: titleGlow 4s infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 15px rgba(255, 223, 163, 0.7);
+        }
+        100% {
+          text-shadow: 0 0 25px rgba(255, 223, 163, 0.9),
+            0 0 40px rgba(255, 190, 100, 0.8);
+        }
       }
 
       .subtitle {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin-bottom: 30px;
-        color: #e3d56d;
+        color: #c5c8e0;
+        font-weight: 300;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .constellation-container {
+      .constellation-wrapper {
         position: relative;
         width: 100%;
-        height: 65vh;
-        margin: 0 auto;
-        border-radius: 10px;
+        height: 70vh;
+        margin: 30px auto;
+        border-radius: 15px;
         overflow: hidden;
-        background: rgba(10, 10, 42, 0.6);
-        box-shadow: 0 0 30px rgba(120, 120, 255, 0.2);
+        perspective: 1000px;
       }
 
       .night-sky {
@@ -61,39 +83,178 @@
         height: 100%;
         top: 0;
         left: 0;
+        transform-style: preserve-3d;
       }
 
+      /* Nebulosas de fondo */
+      .nebula {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+        filter: blur(40px);
+        animation: nebulaFloat 30s infinite alternate;
+      }
+
+      .nebula-1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #44107a, transparent 70%);
+        top: 10%;
+        left: 10%;
+        animation-duration: 40s;
+      }
+
+      .nebula-2 {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #107a7a, transparent 70%);
+        bottom: 5%;
+        right: 15%;
+        animation-duration: 35s;
+      }
+
+      .nebula-3 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, #7a3310, transparent 70%);
+        top: 40%;
+        left: 70%;
+        animation-duration: 45s;
+      }
+
+      @keyframes nebulaFloat {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          transform: translate(30px, 20px) scale(1.1);
+        }
+      }
+
+      /* Estrellas de fondo */
+      .background-star {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        animation: twinkleBackground 8s infinite;
+      }
+
+      @keyframes twinkleBackground {
+        0%,
+        100% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+
+      /* Estrellas principales */
       .star {
         position: absolute;
-        background-color: white;
         border-radius: 50%;
         cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 5px white;
+        transition: all 0.4s ease;
+        transform-style: preserve-3d;
+        animation: starPulse 4s infinite;
+        box-shadow: 0 0 15px currentColor;
+        z-index: 5;
       }
 
       .star:hover {
-        transform: scale(1.5);
-        box-shadow: 0 0 15px #ffdd00;
+        transform: scale(2.2) rotate(15deg);
+        box-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
+        animation: starPulseHover 1s infinite;
+        z-index: 20;
       }
 
       .star.special {
-        background-color: #ffdd00;
-        box-shadow: 0 0 10px #ffdd00, 0 0 20px #ffdd00;
+        animation: specialStarPulse 3s infinite;
       }
 
+      .star.core {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        border-radius: 50%;
+        background: #fff;
+        filter: blur(2px);
+      }
+
+      .star.corona {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        filter: blur(4px);
+        opacity: 0.7;
+      }
+
+      @keyframes starPulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+
+      @keyframes starPulseHover {
+        0%,
+        100% {
+          transform: scale(2.2) rotate(15deg);
+        }
+        50% {
+          transform: scale(2.4) rotate(15deg);
+        }
+      }
+
+      @keyframes specialStarPulse {
+        0%,
+        100% {
+          transform: scale(1.2);
+          box-shadow: 0 0 20px currentColor, 0 0 35px currentColor;
+        }
+        50% {
+          transform: scale(1.5);
+          box-shadow: 0 0 30px currentColor, 0 0 50px currentColor;
+        }
+      }
+
+      /* Líneas de constelación */
       .constellation-line {
         position: absolute;
-        height: 2px;
+        height: 1px;
         background: linear-gradient(
           to right,
-          rgba(255, 255, 255, 0.2),
-          rgba(255, 255, 255, 0.8),
-          rgba(255, 255, 255, 0.2)
+          transparent,
+          rgba(255, 255, 255, 0.7),
+          transparent
         );
         transform-origin: 0 0;
+        animation: lineGlow 5s infinite alternate;
+        z-index: 2;
       }
 
+      @keyframes lineGlow {
+        0% {
+          opacity: 0.3;
+          box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+        100% {
+          opacity: 0.8;
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      /* Modal de recuerdos */
       .memory-modal {
         display: none;
         position: fixed;
@@ -101,80 +262,182 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.85);
         z-index: 100;
         justify-content: center;
         align-items: center;
+        animation: fadeIn 0.7s;
+        backdrop-filter: blur(5px);
       }
 
       .memory-content {
-        background: linear-gradient(135deg, #1a1a40, #2d2d7a);
+        background: linear-gradient(
+          135deg,
+          rgba(26, 26, 64, 0.95),
+          rgba(45, 45, 122, 0.95)
+        );
         width: 90%;
-        max-width: 500px;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 0 30px rgba(120, 120, 255, 0.5);
+        max-width: 550px;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(120, 120, 255, 0.6),
+          0 0 80px rgba(80, 80, 200, 0.3);
         position: relative;
-        border: 1px solid #6a6aff;
+        border: 1px solid rgba(106, 106, 255, 0.5);
+        animation: scaleIn 0.7s;
+        overflow: hidden;
+      }
+
+      .memory-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 20% 30%,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 50%
+        );
+        pointer-events: none;
       }
 
       .close-btn {
         position: absolute;
         top: 15px;
         right: 15px;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         cursor: pointer;
         color: #f8d7da;
+        transition: all 0.3s;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .close-btn:hover {
+        transform: scale(1.2) rotate(90deg);
+        color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.2);
       }
 
       .memory-content h3 {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         color: #ffdd00;
-        font-size: 1.8rem;
+        font-size: 2rem;
+        font-family: 'Cinzel', serif;
+        text-shadow: 0 0 10px rgba(255, 221, 0, 0.6);
       }
 
       .memory-content p {
-        line-height: 1.6;
+        line-height: 1.7;
         margin-bottom: 20px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        color: #e6e6ff;
       }
 
       .memory-date {
         color: #a0a0ff;
         font-style: italic;
-        margin-top: 20px;
+        margin-top: 25px;
+        font-size: 1.1rem;
       }
 
       .instructions {
-        margin-top: 20px;
-        color: #d6d6f6;
-        font-size: 1rem;
+        margin-top: 25px;
+        color: #a5a5d0;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      @media (max-width: 768px) {
+      /* Efectos de destellos */
+      .sparkle {
+        position: absolute;
+        pointer-events: none;
+        border-radius: 50%;
+        opacity: 0;
+        animation: sparkleMove 2s linear forwards;
+        z-index: 4;
+      }
+
+      @keyframes sparkleMove {
+        0% {
+          transform: translate(0, 0) scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--tx), var(--ty)) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      /* Animaciones */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
         h1 {
-          font-size: 2rem;
+          font-size: 2.2rem;
         }
 
         .subtitle {
-          font-size: 1rem;
+          font-size: 1.1rem;
         }
 
-        .constellation-container {
+        .constellation-wrapper {
           height: 60vh;
         }
       }
 
-      /* Animación de estrellas titilantes */
-      @keyframes twinkle {
-        0% {
-          opacity: 0.3;
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.8rem;
         }
-        50% {
-          opacity: 1;
+
+        .subtitle,
+        .instructions {
+          font-size: 1rem;
         }
-        100% {
-          opacity: 0.3;
+
+        .constellation-wrapper {
+          height: 50vh;
+        }
+
+        .memory-content {
+          padding: 25px 20px;
+        }
+
+        .memory-content h3 {
+          font-size: 1.6rem;
+        }
+
+        .memory-content p {
+          font-size: 1rem;
         }
       }
     </style>
@@ -184,18 +447,22 @@
       <header>
         <h1>Constelación de Nuestro Amor</h1>
         <p class="subtitle">
-          Cada estrella representa un momento especial de nuestra historia
+          Cada estrella brilla con la intensidad de nuestros momentos especiales
         </p>
       </header>
 
-      <div class="constellation-container">
+      <div class="constellation-wrapper">
         <div class="night-sky" id="night-sky">
-          <!-- Las estrellas y conexiones se generarán con JavaScript -->
+          <div class="nebula nebula-1"></div>
+          <div class="nebula nebula-2"></div>
+          <div class="nebula nebula-3"></div>
+          <!-- Estrellas y conexiones se generarán con JavaScript -->
         </div>
       </div>
 
       <p class="instructions">
-        Haz clic en cualquier estrella para descubrir nuestros recuerdos
+        Haz clic en cualquier estrella para revivir nuestros recuerdos. Las
+        estrellas más brillantes representan los momentos más especiales.
       </p>
     </div>
 
@@ -211,16 +478,18 @@
     </div>
 
     <script>
-      // Datos de ejemplo - personaliza estos con tus propios recuerdos
+      // Datos de los recuerdos - personaliza con tus momentos especiales
       const memories = [
         {
           title: 'Nuestro Primer Encuentro',
           description:
             'Ese día en que nuestras miradas se cruzaron por primera vez y supe que algo especial comenzaba. Recuerdo tu sonrisa y cómo el tiempo pareció detenerse.',
           date: '15 de Enero, 2022',
-          x: 30,
-          y: 25,
+          x: 25,
+          y: 30,
           special: true,
+          color: '#ffdd00',
+          size: 10,
         },
         {
           title: 'Nuestra Primera Cita',
@@ -228,7 +497,10 @@
             'La noche que fuimos a cenar y hablamos durante horas sin darnos cuenta del tiempo. Descubrí que teníamos tanto en común.',
           date: '22 de Enero, 2022',
           x: 60,
-          y: 40,
+          y: 35,
+          special: true,
+          color: '#ff9966',
+          size: 8,
         },
         {
           title: 'Primer Viaje Juntos',
@@ -237,6 +509,9 @@
           date: '12 de Marzo, 2022',
           x: 45,
           y: 60,
+          special: true,
+          color: '#66ccff',
+          size: 9,
         },
         {
           title: 'Nuestra Primera Aventura',
@@ -244,7 +519,10 @@
             'El día que decidimos hacer algo espontáneo y terminamos explorando lugares nuevos juntos.',
           date: '5 de Abril, 2022',
           x: 75,
-          y: 30,
+          y: 25,
+          special: false,
+          color: '#ff66cc',
+          size: 6,
         },
         {
           title: 'Celebración Especial',
@@ -253,6 +531,9 @@
           date: '18 de Mayo, 2022',
           x: 20,
           y: 50,
+          special: false,
+          color: '#99ff66',
+          size: 7,
         },
         {
           title: 'Noche de Películas',
@@ -261,6 +542,9 @@
           date: '3 de Junio, 2022',
           x: 50,
           y: 75,
+          special: false,
+          color: '#cc99ff',
+          size: 5,
         },
         {
           title: 'Nuestra Canción',
@@ -268,7 +552,10 @@
             "El momento en que escuchamos esa canción y supimos que sería 'nuestra canción' para siempre.",
           date: '25 de Julio, 2022',
           x: 80,
-          y: 65,
+          y: 60,
+          special: true,
+          color: '#ff6666',
+          size: 8,
         },
         {
           title: 'Cena Romántica',
@@ -276,8 +563,10 @@
             'La noche que cociné para ti y decoré toda la casa con velas y flores.',
           date: '14 de Agosto, 2022',
           x: 35,
-          y: 75,
-          special: true,
+          y: 70,
+          special: false,
+          color: '#66ffcc',
+          size: 6,
         },
         {
           title: 'Noche de Estrellas',
@@ -286,14 +575,20 @@
           date: '30 de Agosto, 2022',
           x: 65,
           y: 20,
+          special: false,
+          color: '#ffcc66',
+          size: 5,
         },
         {
           title: 'Momento Gracioso',
           description:
             'Ese día que nos reímos tanto que hasta nos dolía el estómago. Tu risa es mi sonido favorito.',
           date: '9 de Septiembre, 2022',
-          x: 25,
-          y: 35,
+          x: 30,
+          y: 40,
+          special: false,
+          color: '#6699ff',
+          size: 5,
         },
       ];
 
@@ -304,67 +599,119 @@
       const memoryDate = document.getElementById('memory-date');
       const closeBtn = document.getElementById('close-btn');
 
-      // Crear estrellas
-      memories.forEach((memory, index) => {
-        const star = document.createElement('div');
-        star.className = 'star';
-        if (memory.special) star.classList.add('special');
+      // Crear estrellas de fondo
+      function createBackgroundStars() {
+        for (let i = 0; i < 200; i++) {
+          const star = document.createElement('div');
+          star.className = 'background-star';
 
-        // Posicionamiento en porcentajes
-        star.style.left = `${memory.x}%`;
-        star.style.top = `${memory.y}%`;
+          // Posición aleatoria
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+          star.style.left = `${x}%`;
+          star.style.top = `${y}%`;
 
-        // Tamaño aleatorio entre 3 y 6px, más grandes para los especiales
-        const size = memory.special ? 8 : Math.floor(Math.random() * 4) + 3;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
+          // Tamaño aleatorio muy pequeño
+          const size = Math.random() * 2;
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
 
-        // Animación de titileo
-        star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
-        star.style.animationDelay = `${Math.random() * 2}s`;
+          // Opacidad aleatoria
+          star.style.opacity = Math.random() * 0.5 + 0.1;
 
-        // Almacenar índice del recuerdo
-        star.dataset.index = index;
+          // Animación delay aleatorio
+          star.style.animationDelay = `${Math.random() * 8}s`;
 
-        // Evento al hacer clic
-        star.addEventListener('click', () => {
-          showMemory(index);
+          nightSky.appendChild(star);
+        }
+      }
+
+      // Crear estrellas principales
+      function createMainStars() {
+        memories.forEach((memory, index) => {
+          const star = document.createElement('div');
+          star.className = 'star';
+          if (memory.special) star.classList.add('special');
+
+          // Posicionamiento en porcentajes
+          star.style.left = `${memory.x}%`;
+          star.style.top = `${memory.y}%`;
+
+          // Tamaño basado en los datos
+          star.style.width = `${memory.size}px`;
+          star.style.height = `${memory.size}px`;
+
+          // Color basado en los datos
+          star.style.color = memory.color;
+
+          // Núcleo de la estrella
+          const core = document.createElement('div');
+          core.className = 'star core';
+          core.style.backgroundColor = memory.color;
+          star.appendChild(core);
+
+          // Corona de la estrella
+          const corona = document.createElement('div');
+          corona.className = 'star corona';
+          corona.style.backgroundColor = memory.color;
+          star.appendChild(corona);
+
+          // Animación delay aleatorio
+          star.style.animationDelay = `${Math.random() * 2}s`;
+
+          // Almacenar índice del recuerdo
+          star.dataset.index = index;
+
+          // Evento al hacer clic
+          star.addEventListener('click', () => {
+            showMemory(index);
+            createSparkles(star, memory.color);
+          });
+
+          // Efecto de destellos aleatorios
+          setInterval(() => {
+            createSparkles(star, memory.color);
+          }, 4000 + Math.random() * 6000);
+
+          nightSky.appendChild(star);
         });
+      }
 
-        nightSky.appendChild(star);
-      });
-
-      // Crear conexiones entre estrellas (formando constelaciones)
-      for (let i = 0; i < memories.length - 1; i++) {
-        for (let j = i + 1; j < memories.length; j++) {
-          // Conectar estrellas cercanas
-          const distance = Math.sqrt(
-            Math.pow(memories[j].x - memories[i].x, 2) +
-              Math.pow(memories[j].y - memories[i].y, 2)
-          );
-
-          if (distance < 40) {
-            // Solo conectar estrellas cercanas
-            const line = document.createElement('div');
-            line.className = 'constellation-line';
-
-            const x1 = memories[i].x;
-            const y1 = memories[i].y;
-            const x2 = memories[j].x;
-            const y2 = memories[j].y;
-
-            const length = Math.sqrt(
-              Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+      // Crear conexiones entre estrellas
+      function createConstellationLines() {
+        for (let i = 0; i < memories.length - 1; i++) {
+          for (let j = i + 1; j < memories.length; j++) {
+            // Conectar estrellas cercanas
+            const distance = Math.sqrt(
+              Math.pow(memories[j].x - memories[i].x, 2) +
+                Math.pow(memories[j].y - memories[i].y, 2)
             );
-            const angle = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
 
-            line.style.width = `${length}%`;
-            line.style.left = `${x1}%`;
-            line.style.top = `${y1}%`;
-            line.style.transform = `rotate(${angle}deg)`;
-            line.style.opacity = 0.3 + 0.7 * (1 - distance / 40); // Más opaco cuanto más cerca
+            if (distance < 35) {
+              const line = document.createElement('div');
+              line.className = 'constellation-line';
 
-            nightSky.appendChild(line);
+              const x1 = memories[i].x;
+              const y1 = memories[i].y;
+              const x2 = memories[j].x;
+              const y2 = memories[j].y;
+
+              const length = Math.sqrt(
+                Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+              );
+              const angle = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+
+              line.style.width = `${length}%`;
+              line.style.left = `${x1}%`;
+              line.style.top = `${y1}%`;
+              line.style.transform = `rotate(${angle}deg)`;
+              line.style.opacity = 0.3 + 0.7 * (1 - distance / 35);
+
+              // Delay aleatorio para la animación
+              line.style.animationDelay = `${Math.random() * 5}s`;
+
+              nightSky.appendChild(line);
+            }
           }
         }
       }
@@ -378,6 +725,105 @@
         memoryModal.style.display = 'flex';
       }
 
+      // Función para crear destellos alrededor de una estrella
+      function createSparkles(star, color) {
+        const rect = star.getBoundingClientRect();
+        const containerRect = nightSky.getBoundingClientRect();
+
+        const starX = rect.left + rect.width / 2 - containerRect.left;
+        const starY = rect.top + rect.height / 2 - containerRect.top;
+
+        // Crear varios destellos
+        for (let i = 0; i < 8; i++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+
+          // Posición aleatoria alrededor de la estrella
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 25 + Math.random() * 40;
+          const tx = Math.cos(angle) * distance;
+          const ty = Math.sin(angle) * distance;
+
+          sparkle.style.left = `${starX}px`;
+          sparkle.style.top = `${starY}px`;
+          sparkle.style.setProperty('--tx', `${tx}px`);
+          sparkle.style.setProperty('--ty', `${ty}px`);
+
+          // Tamaño aleatorio
+          const size = 2 + Math.random() * 4;
+          sparkle.style.width = `${size}px`;
+          sparkle.style.height = `${size}px`;
+
+          // Usar el color de la estrella con variaciones
+          const colorVariation = Math.random() * 40 - 20;
+          sparkle.style.background = color;
+
+          // Delay aleatorio
+          sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+
+          nightSky.appendChild(sparkle);
+
+          // Eliminar el destello después de la animación
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 2000);
+        }
+      }
+
+      // Inicializar la constelación
+      function initConstellation() {
+        createBackgroundStars();
+        createMainStars();
+        createConstellationLines();
+
+        // Crear destellos aleatorios en el fondo
+        setInterval(() => {
+          const x = Math.random() * 100;
+          const y = Math.random() * 100;
+
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = `${x}%`;
+          sparkle.style.top = `${y}%`;
+
+          // Tamaño pequeño para destellos de fondo
+          const size = 1 + Math.random() * 2;
+          sparkle.style.width = `${size}px`;
+          sparkle.style.height = `${size}px`;
+
+          // Color aleatorio
+          const colors = [
+            '#ffdd00',
+            '#66ccff',
+            '#ff9966',
+            '#cc99ff',
+            '#99ff66',
+          ];
+          sparkle.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // Movimiento aleatorio
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 15 + Math.random() * 25;
+          const tx = Math.cos(angle) * distance;
+          const ty = Math.sin(angle) * distance;
+
+          sparkle.style.setProperty('--tx', `${tx}px`);
+          sparkle.style.setProperty('--ty', `${ty}px`);
+
+          nightSky.appendChild(sparkle);
+
+          // Eliminar el destello después de la animación
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 2000);
+        }, 800);
+      }
+
       // Cerrar modal
       closeBtn.addEventListener('click', () => {
         memoryModal.style.display = 'none';
@@ -389,6 +835,9 @@
           memoryModal.style.display = 'none';
         }
       });
+
+      // Iniciar cuando el documento esté cargado
+      document.addEventListener('DOMContentLoaded', initConstellation);
     </script>
   </body>
 </html>
