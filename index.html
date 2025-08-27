@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Constelación de Nuestro Amor</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom, #0a0a2a, #1a1a40, #0a0a2a);
+        color: #fff;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      header {
+        padding: 40px 0 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #faed33;
+        text-shadow: 0 0 10px rgba(235, 10, 10, 0.8);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #e3d56d;
+      }
+
+      .constellation-container {
+        position: relative;
+        width: 100%;
+        height: 65vh;
+        margin: 0 auto;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(10, 10, 42, 0.6);
+        box-shadow: 0 0 30px rgba(120, 120, 255, 0.2);
+      }
+
+      .night-sky {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      .star {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 5px white;
+      }
+
+      .star:hover {
+        transform: scale(1.5);
+        box-shadow: 0 0 15px #ffdd00;
+      }
+
+      .star.special {
+        background-color: #ffdd00;
+        box-shadow: 0 0 10px #ffdd00, 0 0 20px #ffdd00;
+      }
+
+      .constellation-line {
+        position: absolute;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.2),
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0.2)
+        );
+        transform-origin: 0 0;
+      }
+
+      .memory-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .memory-content {
+        background: linear-gradient(135deg, #1a1a40, #2d2d7a);
+        width: 90%;
+        max-width: 500px;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(120, 120, 255, 0.5);
+        position: relative;
+        border: 1px solid #6a6aff;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #f8d7da;
+      }
+
+      .memory-content h3 {
+        margin-bottom: 15px;
+        color: #ffdd00;
+        font-size: 1.8rem;
+      }
+
+      .memory-content p {
+        line-height: 1.6;
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+      }
+
+      .memory-date {
+        color: #a0a0ff;
+        font-style: italic;
+        margin-top: 20px;
+      }
+
+      .instructions {
+        margin-top: 20px;
+        color: #d6d6f6;
+        font-size: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .subtitle {
+          font-size: 1rem;
+        }
+
+        .constellation-container {
+          height: 60vh;
+        }
+      }
+
+      /* Animación de estrellas titilantes */
+      @keyframes twinkle {
+        0% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Constelación de Nuestro Amor</h1>
+        <p class="subtitle">
+          Cada estrella representa un momento especial de nuestra historia
+        </p>
+      </header>
+
+      <div class="constellation-container">
+        <div class="night-sky" id="night-sky">
+          <!-- Las estrellas y conexiones se generarán con JavaScript -->
+        </div>
+      </div>
+
+      <p class="instructions">
+        Haz clic en cualquier estrella para descubrir nuestros recuerdos
+      </p>
+    </div>
+
+    <div class="memory-modal" id="memory-modal">
+      <div class="memory-content">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <h3 id="memory-title">Título del Recuerdo</h3>
+        <p id="memory-description">
+          Descripción del recuerdo aparecerá aquí...
+        </p>
+        <p class="memory-date" id="memory-date">Fecha del recuerdo</p>
+      </div>
+    </div>
+
+    <script>
+      // Datos de ejemplo - personaliza estos con tus propios recuerdos
+      const memories = [
+        {
+          title: 'Nuestro Primer Encuentro',
+          description:
+            'Ese día en que nuestras miradas se cruzaron por primera vez y supe que algo especial comenzaba. Recuerdo tu sonrisa y cómo el tiempo pareció detenerse.',
+          date: '15 de Enero, 2022',
+          x: 30,
+          y: 25,
+          special: true,
+        },
+        {
+          title: 'Nuestra Primera Cita',
+          description:
+            'La noche que fuimos a cenar y hablamos durante horas sin darnos cuenta del tiempo. Descubrí que teníamos tanto en común.',
+          date: '22 de Enero, 2022',
+          x: 60,
+          y: 40,
+        },
+        {
+          title: 'Primer Viaje Juntos',
+          description:
+            'El fin de semana que escapamos a la montaña. Esas caminatas, las risas y las conversaciones bajo las estrellas.',
+          date: '12 de Marzo, 2022',
+          x: 45,
+          y: 60,
+        },
+        {
+          title: 'Nuestra Primera Aventura',
+          description:
+            'El día que decidimos hacer algo espontáneo y terminamos explorando lugares nuevos juntos.',
+          date: '5 de Abril, 2022',
+          x: 75,
+          y: 30,
+        },
+        {
+          title: 'Celebración Especial',
+          description:
+            'Tu cumpleaños cuando preparé esa sorpresa para ti y vi la felicidad en tus ojos.',
+          date: '18 de Mayo, 2022',
+          x: 20,
+          y: 50,
+        },
+        {
+          title: 'Noche de Películas',
+          description:
+            'Esas tardes lluviosas acurrucados viendo películas, con palomitas y tu compañía.',
+          date: '3 de Junio, 2022',
+          x: 50,
+          y: 75,
+        },
+        {
+          title: 'Nuestra Canción',
+          description:
+            "El momento en que escuchamos esa canción y supimos que sería 'nuestra canción' para siempre.",
+          date: '25 de Julio, 2022',
+          x: 80,
+          y: 65,
+        },
+        {
+          title: 'Cena Romántica',
+          description:
+            'La noche que cociné para ti y decoré toda la casa con velas y flores.',
+          date: '14 de Agosto, 2022',
+          x: 35,
+          y: 75,
+          special: true,
+        },
+        {
+          title: 'Noche de Estrellas',
+          description:
+            'Cuando fuimos a ese lugar apartado solo para observar las estrellas y soñar juntos.',
+          date: '30 de Agosto, 2022',
+          x: 65,
+          y: 20,
+        },
+        {
+          title: 'Momento Gracioso',
+          description:
+            'Ese día que nos reímos tanto que hasta nos dolía el estómago. Tu risa es mi sonido favorito.',
+          date: '9 de Septiembre, 2022',
+          x: 25,
+          y: 35,
+        },
+      ];
+
+      const nightSky = document.getElementById('night-sky');
+      const memoryModal = document.getElementById('memory-modal');
+      const memoryTitle = document.getElementById('memory-title');
+      const memoryDescription = document.getElementById('memory-description');
+      const memoryDate = document.getElementById('memory-date');
+      const closeBtn = document.getElementById('close-btn');
+
+      // Crear estrellas
+      memories.forEach((memory, index) => {
+        const star = document.createElement('div');
+        star.className = 'star';
+        if (memory.special) star.classList.add('special');
+
+        // Posicionamiento en porcentajes
+        star.style.left = `${memory.x}%`;
+        star.style.top = `${memory.y}%`;
+
+        // Tamaño aleatorio entre 3 y 6px, más grandes para los especiales
+        const size = memory.special ? 8 : Math.floor(Math.random() * 4) + 3;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+
+        // Animación de titileo
+        star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+        star.style.animationDelay = `${Math.random() * 2}s`;
+
+        // Almacenar índice del recuerdo
+        star.dataset.index = index;
+
+        // Evento al hacer clic
+        star.addEventListener('click', () => {
+          showMemory(index);
+        });
+
+        nightSky.appendChild(star);
+      });
+
+      // Crear conexiones entre estrellas (formando constelaciones)
+      for (let i = 0; i < memories.length - 1; i++) {
+        for (let j = i + 1; j < memories.length; j++) {
+          // Conectar estrellas cercanas
+          const distance = Math.sqrt(
+            Math.pow(memories[j].x - memories[i].x, 2) +
+              Math.pow(memories[j].y - memories[i].y, 2)
+          );
+
+          if (distance < 40) {
+            // Solo conectar estrellas cercanas
+            const line = document.createElement('div');
+            line.className = 'constellation-line';
+
+            const x1 = memories[i].x;
+            const y1 = memories[i].y;
+            const x2 = memories[j].x;
+            const y2 = memories[j].y;
+
+            const length = Math.sqrt(
+              Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+            );
+            const angle = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+
+            line.style.width = `${length}%`;
+            line.style.left = `${x1}%`;
+            line.style.top = `${y1}%`;
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.opacity = 0.3 + 0.7 * (1 - distance / 40); // Más opaco cuanto más cerca
+
+            nightSky.appendChild(line);
+          }
+        }
+      }
+
+      // Función para mostrar recuerdo
+      function showMemory(index) {
+        const memory = memories[index];
+        memoryTitle.textContent = memory.title;
+        memoryDescription.textContent = memory.description;
+        memoryDate.textContent = memory.date;
+        memoryModal.style.display = 'flex';
+      }
+
+      // Cerrar modal
+      closeBtn.addEventListener('click', () => {
+        memoryModal.style.display = 'none';
+      });
+
+      // Cerrar modal al hacer clic fuera del contenido
+      memoryModal.addEventListener('click', (e) => {
+        if (e.target === memoryModal) {
+          memoryModal.style.display = 'none';
+        }
+      });
+    </script>
+  </body>
+</html>
